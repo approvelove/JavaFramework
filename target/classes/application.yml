@@ -1,0 +1,21 @@
+spring:
+  profiles:
+    active: dev
+---
+spring:
+  profiles:
+    active: prod
+---
+spring:
+  profiles:
+    include: ljconfig
+---
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: com.lj.mysystem.entity
+  configuration:
+    map-underscore-to-camel-case: true
+---
+server:
+  servlet:
+    context-path: /payroll

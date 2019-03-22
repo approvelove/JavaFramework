@@ -1,0 +1,29 @@
+server:
+  port: 8081
+---
+spring:
+  profiles:
+    include: ljconfig
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    platform: mysql
+    url: jdbc:mysql://192.168.5.1:3306/payroll?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+    username: root
+    password: ronghui
+    druid:
+    initial-size: 5
+    min-idle: 5
+    max-active: 100
+    max-wait: 60000
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 300000
+    validation-query: select 'x'
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
+    filters: config,wall,stat
+    pool-prepared-statements: false
+    max-pool-prepared-statement-per-connection-size: 20
+  application:
+    name: "我的spring cloud 应用"

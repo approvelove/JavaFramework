@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lj.mysystem.dao.tax.IncomeTaxDispatchMapper">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="com.lj.mysystem.entity.tax.IncomeTaxDispatch">
+    select * from t_income_tax_dispatch
+    WHERE
+    tax_id = #{tax_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_income_tax_dispatch
+    where tax_id = #{tax_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lj.mysystem.entity.tax.IncomeTaxDispatch">
+    insert into t_income_tax_dispatch (tax_id, tax_level, tax_deduction, 
+      tax_rate, tax_quick, tax_upper, 
+      tax_lower)
+    values (#{tax_id,jdbcType=INTEGER}, #{tax_level,jdbcType=VARCHAR}, #{tax_deduction,jdbcType=VARCHAR}, 
+      #{tax_rate,jdbcType=VARCHAR}, #{tax_quick,jdbcType=VARCHAR}, #{tax_upper,jdbcType=VARCHAR}, 
+      #{tax_lower,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lj.mysystem.entity.tax.IncomeTaxDispatch">
+    insert into t_income_tax_dispatch
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tax_id != null">
+        tax_id,
+      </if>
+      <if test="tax_level != null">
+        tax_level,
+      </if>
+      <if test="tax_deduction != null">
+        tax_deduction,
+      </if>
+      <if test="tax_rate != null">
+        tax_rate,
+      </if>
+      <if test="tax_quick != null">
+        tax_quick,
+      </if>
+      <if test="tax_upper != null">
+        tax_upper,
+      </if>
+      <if test="tax_lower != null">
+        tax_lower,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tax_id != null">
+        #{tax_id,jdbcType=INTEGER},
+      </if>
+      <if test="tax_level != null">
+        #{tax_level,jdbcType=VARCHAR},
+      </if>
+      <if test="tax_deduction != null">
+        #{tax_deduction,jdbcType=VARCHAR},
+      </if>
+      <if test="tax_rate != null">
+        #{tax_rate,jdbcType=VARCHAR},
+      </if>
+      <if test="tax_quick != null">
+        #{tax_quick,jdbcType=VARCHAR},
+      </if>
+      <if test="tax_upper != null">
+        #{tax_upper,jdbcType=VARCHAR},
+      </if>
+      <if test="tax_lower != null">
+        #{tax_lower,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lj.mysystem.entity.tax.IncomeTaxDispatch">
+    update t_income_tax_dispatch
+    <set>
+      <if test="tax_level != null">
+        tax_level = #{tax_level,jdbcType=VARCHAR},
+      </if>
+      <if test="tax_deduction != null">
+        tax_deduction = #{tax_deduction,jdbcType=VARCHAR},
+      </if>
+      <if test="tax_rate != null">
+        tax_rate = #{tax_rate,jdbcType=VARCHAR},
+      </if>
+      <if test="tax_quick != null">
+        tax_quick = #{tax_quick,jdbcType=VARCHAR},
+      </if>
+      <if test="tax_upper != null">
+        tax_upper = #{tax_upper,jdbcType=VARCHAR},
+      </if>
+      <if test="tax_lower != null">
+        tax_lower = #{tax_lower,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tax_id = #{tax_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lj.mysystem.entity.tax.IncomeTaxDispatch">
+    update t_income_tax_dispatch
+    set tax_level = #{tax_level,jdbcType=VARCHAR},
+      tax_deduction = #{tax_deduction,jdbcType=VARCHAR},
+      tax_rate = #{tax_rate,jdbcType=VARCHAR},
+      tax_quick = #{tax_quick,jdbcType=VARCHAR},
+      tax_upper = #{tax_upper,jdbcType=VARCHAR},
+      tax_lower = #{tax_lower,jdbcType=VARCHAR}
+    where tax_id = #{tax_id,jdbcType=INTEGER}
+  </update>
+  
+  <!--查询全部-->
+  <select id="selectAll" parameterType="com.lj.mysystem.entity.tax.IncomeTaxDispatch" resultType="com.lj.mysystem.entity.tax.IncomeTaxDispatch">
+    select * from t_income_tax_dispatch
+  </select>
+  
+  <!--批量删除-->
+  <delete id="batchDeleteByPrimaryKey">
+    DELETE FROM t_income_tax_dispatch WHERE tax_id IN 
+    <foreach close=")" collection="array" index="index" item="item" open="(" separator=",">
+      #{item}
+    </foreach>
+  </delete>
+  
+  <!--分页-->
+  <select id="findPageList" parameterType="com.lj.mysystem.entity.base.PageEntity" resultType="com.lj.mysystem.entity.tax.IncomeTaxDispatch">
+    SELECT * 
+    FROM t_income_tax_dispatch
+    <where>
+      <if test="cons.search_str1!=null and cons.search_str1 !=''">
+        tax_level LIKE concat('%',concat(#{cons.search_str1},'%'))
+      </if>
+    </where>
+    ORDER BY tax_id
+    limit #{start},#{pageSize} 
+  </select>
+  
+  <!--分页统计-->
+  <select id="findTotalCount" parameterType="com.lj.mysystem.entity.base.PageEntity" resultType="java.lang.Integer">
+    SELECT
+    count(1)
+    FROM t_income_tax_dispatch
+    <where>
+      <if test="cons.search_str1!=null and cons.search_str1 !=''">
+       tax_level LIKE concat('%',concat(#{cons.search_str1},'%'))
+      </if>
+    </where>
+  </select>
+  
+  <!--根据非主键条件查询单个-->
+  <select id="findByMap" parameterType="java.util.Map" resultType="com.lj.mysystem.entity.tax.IncomeTaxDispatch">
+    SELECT * 
+    FROM t_income_tax_dispatch
+    <where>
+      <if test="tax_level!=null and tax_level!=''">
+          tax_level=#{tax_level}
+      </if>
+    </where>
+  </select>
+  
+  <!--根据非主键条件查询集合-->
+  <select id="findListByMap" parameterType="java.util.Map" resultType="com.lj.mysystem.entity.tax.IncomeTaxDispatch">
+    SELECT * 
+    FROM t_income_tax_dispatch
+    <where>
+      <if test="tax_level!=null and tax_level!=''">
+          tax_level=#{tax_level}
+      </if>
+    </where>
+    ORDER BY tax_id
+  </select>
+</mapper>

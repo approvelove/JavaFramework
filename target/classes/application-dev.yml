@@ -1,0 +1,42 @@
+server:
+  port: 8080
+---
+spring:
+  profiles:
+    include: ljconfig
+  datasource: #阿里数据库连接池的配置
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    platform: mysql
+    url: jdbc:mysql://180.76.250.89:3306/payroll1.0?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+    username: root
+    password: ronghui123
+    druid:
+    initial-size: 5
+    min-idle: 5
+    max-active: 100
+    max-wait: 60000
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 300000
+    validation-query: select 'x'
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
+    filters: config,wall,stat
+    pool-prepared-statements: false
+    max-pool-prepared-statement-per-connection-size: 20
+  freemarker: #freemaker 的配置
+    template-loader-path: classpath:ftl/*.ftl
+    cache: true
+    check-template-location: true
+    content-type: text/html; charset=UTF-8
+    expose-request-attributes: true
+    expose-session-attributes: true
+    request-context-attribute: request
+    suffix: .ftl
+  application:
+    name: "我的spring cloud 应用"
+---
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
